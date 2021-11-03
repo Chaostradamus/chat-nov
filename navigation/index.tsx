@@ -17,6 +17,7 @@ import { ColorSchemeName, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import AuthContext from "../contexts/Authentication";
 import useColorScheme from "../hooks/useColorScheme";
+import ChannelScreen from "../screens/ChannelScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SignupScreen from "../screens/SignupScreen";
@@ -67,6 +68,11 @@ function RootNavigator() {
             name="Root"
             component={BottomTabNavigator}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Channel"
+            component={ChannelScreen}
+            options={{ headerTitle: "Channel" }}
           />
           <Stack.Screen
             name="NotFound"

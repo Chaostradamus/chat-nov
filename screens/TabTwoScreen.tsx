@@ -8,8 +8,9 @@ import UserListItem from "../components/UserListItem";
 
 export default function TabTwoScreen() {
   const [users, setUsers] = useState<any>([]);
-  const { client } = useChatContext();
   const [isLoading, setIsLoading] = useState(false);
+  
+  const { client } = useChatContext();
 
   const fetchUsers = async () => {
     setIsLoading(true);
