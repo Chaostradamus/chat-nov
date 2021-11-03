@@ -34,9 +34,7 @@ export default function App() {
     return () => client.disconnectUser();
   }, []);
 
-  const onChannelPressed = (channel) => {
-    setSelectedChannel(channel);
-  };
+  
 
   if (!isLoadingComplete) {
     return null;
