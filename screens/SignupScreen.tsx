@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, TextInput, StyleSheet, Pressable, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useChatContext } from "stream-chat-expo";
+import AuthContext from "../contexts/Authentication";
 
 const SignupScreen = () => {
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
+
+  const { setUserId } = useContext(AuthContext);
   const { client } = useChatContext();
 
   const connectUser = async (username: string, fullName: string) => {
@@ -17,19 +20,39 @@ const SignupScreen = () => {
       },
       client.devToken(username)
     );
-    // channel creation
+
+    // // create a channel
     const channel = client.channel("livestream", "live", {
       name: "notJust.dev",
     });
-
     await channel.create();
+
+    setUserId(username);
   };
 
-   const signUp = () => {
-     // sign the user with your backend
+  // const connectUser = async (username: string, fullName: string) => {
+  //   await client.connectUser(
+  //     {
+  //       id: username,
+  //       name: fullName,
+  //       // image: "https://i.imgur.com/fR9Jz14.png",
+  //     },
+  //     client.devToken(username)
+  //   );
+  //   // channel creation
+  //   const channel = client.channel("livestream", "live", {
+  //     name: "notJust.dev",
+  //   });
 
-     connectUser(username, fullName);
-   };
+  //   await channel.create();
+  // };
+
+  const signUp = () => {
+    // sign the user with your backend
+
+    connectUser(username, fullName);
+  };
+
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.inputContainer}>

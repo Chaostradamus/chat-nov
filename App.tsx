@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StreamChat } from "stream-chat";
@@ -12,6 +12,9 @@ import {
   MessageInput,
 } from "stream-chat-expo";
 
+
+import AuthContext from './contexts/Authentication'
+
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
@@ -22,6 +25,8 @@ const client = StreamChat.getInstance(API_KEY);
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+
+  const [userId, setUserId] = useState('')
 
   const [selectedChannel, setSelectedChannel] = useState<any>(null);
 
@@ -38,6 +43,7 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
+        <AuthContext.Provider value={{userId, setUserId}}>
         <OverlayProvider>
           <Chat client={client}>
             <Navigation colorScheme="light" />
@@ -60,6 +66,7 @@ export default function App() {
           </Chat> */}
         </OverlayProvider>
         <StatusBar />
+        </AuthContext.Provider>
       </SafeAreaProvider>
     );
   }
