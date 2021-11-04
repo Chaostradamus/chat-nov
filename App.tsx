@@ -18,6 +18,8 @@ import AuthContext from './contexts/Authentication'
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
+import messaging from '@react-native-firebase/messaging'
+
 
 const API_KEY = "r6bkczhwcgx2";
 const client = StreamChat.getInstance(API_KEY);
@@ -29,6 +31,17 @@ export default function App() {
   const [userId, setUserId] = useState('')
 
   const [selectedChannel, setSelectedChannel] = useState<any>(null);
+
+ const requestPermission = async () => {
+   const authStatus = await messaging().requestPermission();
+   const enabled =
+     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+   if (enabled) {
+     console.log("Authorization status:", authStatus);
+   }
+ };
 
   useEffect(() => {
     return () => client.disconnectUser();
