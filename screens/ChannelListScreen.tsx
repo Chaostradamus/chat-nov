@@ -4,14 +4,25 @@ import { ChannelList } from "stream-chat-expo";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
+import AuthContext from "../contexts/Authentication";
 import { RootTabScreenProps } from "../types";
 
 export default function TabOneScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
-  const onChannelPressed = (channel) => {};
+  const onChannelPressed = (channel) => {
+    navigation.navigate("Channel", { channel });
+  };
 
-  return <ChannelList onSelect={onChannelPressed} />;
+
+  const {userId} = React.useContext(AuthContext);
+  const filters = {
+    members: {
+      $in: [""],
+    }
+  }
+
+  return <ChannelList onSelect={onChannelPressed} filters={filters} />;
 }
 
 const styles = StyleSheet.create({

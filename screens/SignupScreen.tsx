@@ -22,10 +22,10 @@ const SignupScreen = () => {
     );
 
     // // create a channel
-    const channel = client.channel("livestream", "live", {
-      name: "notJust.dev",
-    });
-    await channel.create();
+  //   const channel = client.channel("livestreammessaging", "notjustdev", {
+  //     name: "notJust.dev",
+  //   });
+  //   await channel.create();
 
     setUserId(username);
   };

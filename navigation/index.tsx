@@ -21,8 +21,8 @@ import ChannelScreen from "../screens/ChannelScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SignupScreen from "../screens/SignupScreen";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import TabOneScreen from "../screens/ChannelListScreen";
+import TabTwoScreen from "../screens/UsersScreen";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -79,9 +79,7 @@ function RootNavigator() {
             component={NotFoundScreen}
             options={{ title: "Oops!" }}
           />
-          <Stack.Group screenOptions={{ presentation: "modal" }}>
-            <Stack.Screen name="Modal" component={ModalScreen} />
-          </Stack.Group>
+         
         </>
       )}
     </Stack.Navigator>
@@ -108,31 +106,17 @@ function BottomTabNavigator() {
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Tab One",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
+          title: "Chat",
+          tabBarIcon: ({ color }) => <TabBarIcon name="comments" color={color} />,
+        
         })}
       />
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Users",
+          tabBarIcon: ({ color }) => <TabBarIcon name="users" color={color} />,
         }}
       />
     </BottomTab.Navigator>
