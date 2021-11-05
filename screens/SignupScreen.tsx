@@ -11,6 +11,7 @@ const SignupScreen = () => {
   const { setUserId } = useContext(AuthContext);
   const { client } = useChatContext();
 
+  
   const connectUser = async (username: string, fullName: string) => {
     await client.connectUser(
       {
@@ -19,7 +20,8 @@ const SignupScreen = () => {
         // image: "https://i.imgur.com/fR9Jz14.png",
       },
       client.devToken(username)
-    );
+      );
+     
 
     // // create a channel
   //   const channel = client.channel("livestreammessaging", "notjustdev", {
