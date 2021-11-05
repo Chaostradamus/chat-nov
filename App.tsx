@@ -46,30 +46,7 @@ export default function App() {
   useEffect(() => {
     requestPermission();
 
-    // for background noti
-    messaging().onNotificationOpenedApp((remoteMessage) => {
-      console.log(
-        "Notification caused app to oepn from the background state:",
-        remoteMessage
-      );
-      const channel = JSON.parse(remoteMessage?.data?.channel || "");
-      console.log("This message belongs to the channel with id - ", channel.id);
-    });
-
-    // for noti when app is in quit state
-    messaging()
-      .getInitialNotification()
-      .then((remoteMessage) => {
-        if (remoteMessage) {
-          console.log(
-            "Notification caused app to open from a quit state:",
-            remoteMessage
-          );
-          const channel = JSON.parse(remoteMessage?.data?.channel || "");
-
-          console.log("this message belongs to channel with ID - ", channel.id);
-        }
-      });
+   
   }, []);
 
   useEffect(() => {
