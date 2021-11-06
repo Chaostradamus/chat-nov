@@ -3,18 +3,18 @@ import React, { useEffect, useState, useContext } from "react";
 import { Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StreamChat } from "stream-chat";
-import { OverlayProvider, Chat } from "stream-chat-expo";
-
+import { OverlayProvider, Chat, Streami18n } from "stream-chat-expo";
 import messaging from "@react-native-firebase/messaging";
 
 import AuthContext from "./contexts/Authentication";
-
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
 const API_KEY = "r6bkczhwcgx2";
 const client = StreamChat.getInstance(API_KEY);
+
+const streami18n = new Streami18n({ language: "hi" });
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -39,14 +39,13 @@ export default function App() {
 
   useEffect(() => {
     if (userId) {
+      // register device should be called only if user is authenticated
       registerDevice();
     }
   }, [userId]);
 
   useEffect(() => {
     requestPermission();
-
-   
   }, []);
 
   useEffect(() => {
@@ -59,8 +58,8 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <AuthContext.Provider value={{ userId, setUserId }}>
-          <OverlayProvider>
-            <Chat client={client}>
+          <OverlayProvider i18nInstance={streami18n}>
+            <Chat client={client} i18nInstance={streami18n}>
               <Navigation colorScheme="light" />
             </Chat>
             {/* <Chat client={client}>
@@ -72,7 +71,7 @@ export default function App() {
                   style={{ margin: 50 }}
                   onPress={() => setSelectedChannel(null)}
                 >
-                  Go Back
+                  Go back
                 </Text>
               </Channel>
             ) : (

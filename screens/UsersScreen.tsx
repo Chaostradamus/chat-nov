@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { useChatContext } from "stream-chat-expo";
-
 
 import { View } from "../components/Themed";
 import UserListItem from "../components/UserListItem";
 
 export default function UsersScreen() {
-  const [users, setUsers] = useState<any>([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const { client } = useChatContext();
@@ -41,5 +40,4 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "center",
   },
- 
 });

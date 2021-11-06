@@ -1,8 +1,3 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -18,6 +13,7 @@ import Colors from "../constants/Colors";
 import AuthContext from "../contexts/Authentication";
 import useColorScheme from "../hooks/useColorScheme";
 import ChannelScreen from "../screens/ChannelScreen";
+import ThreadScreen from "../screens/ThreadScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SignupScreen from "../screens/SignupScreen";
@@ -75,11 +71,15 @@ function RootNavigator() {
             options={{ headerTitle: "Channel" }}
           />
           <Stack.Screen
+            name="Thread"
+            component={ThreadScreen}
+            options={{ headerTitle: "Thread" }}
+          />
+          <Stack.Screen
             name="NotFound"
             component={NotFoundScreen}
             options={{ title: "Oops!" }}
           />
-         
         </>
       )}
     </Stack.Navigator>
@@ -107,8 +107,9 @@ function BottomTabNavigator() {
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
           title: "Chat",
-          tabBarIcon: ({ color }) => <TabBarIcon name="comments" color={color} />,
-        
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="comments" color={color} />
+          ),
         })}
       />
       <BottomTab.Screen

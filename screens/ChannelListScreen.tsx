@@ -1,7 +1,7 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { ChannelList } from "stream-chat-expo";
-import messaging from '@react-native-firebase/messaging'
+import messaging from "@react-native-firebase/messaging";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
@@ -15,46 +15,44 @@ export default function TabOneScreen({
     navigation.navigate("Channel", { channelId: channel.id });
   };
 
+  const { userId } = React.useContext(AuthContext);
 
-  const {userId} = React.useContext(AuthContext);
   const filters = {
     members: {
-      $in: [""],
-    }
-  }
-
+      $in: [userId],
+    },
+  };
 
   useEffect(() => {
-    // for background noti
+    // for background notifications
     messaging().onNotificationOpenedApp((remoteMessage) => {
       console.log(
-        "Notification caused app to oepn from the background state:",
+        "Notification caused app to open from background state:",
         remoteMessage
       );
+
       const channel = JSON.parse(remoteMessage?.data?.channel || "");
-     
-      console.log("This message belongs to the channel with id - ", channel.id);
-      navigation.navigate("Channel", {channel.Id})
+      console.log("This message belongs to channel with id - ", channel.id);
+      navigation.navigate("Channel", { channelId: channel.id });
     });
 
-    // for noti when app is in quit state
+    // for notification when app is in quit state
     messaging()
       .getInitialNotification()
       .then((remoteMessage) => {
         if (remoteMessage) {
           console.log(
-            "Notification caused app to open from a quit state:",
+            "Notification caused app to open from quite state:",
             remoteMessage
           );
           const channel = JSON.parse(remoteMessage?.data?.channel || "");
 
-          console.log("this message belongs to channel with ID - ", channel.id);
-          navigation.navigate("Channel", { channel.Id });
+          console.log("This message belongs to channel with id - ", channel.id);
+
+          navigation.navigate("Channel", { channelId: channel.id });
         }
       });
-  })
-
-
+  }, []);
 
   return <ChannelList onSelect={onChannelPressed} filters={filters} />;
 }
